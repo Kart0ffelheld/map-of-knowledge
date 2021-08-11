@@ -258,19 +258,22 @@ def update_metrics(n):
 
 # Graph
 @app.callback(Output('cytoscape', 'elements'),
+              Output('cytoscape', 'layout'),
               [Input('start-button', 'n_clicks')],
               [State('topic', 'value'),
               State('Depth', 'value'),
-              State('dropdown_language', 'value')])
-def update_graph(n_clicks, topic, Depth, dropdown_language):
-    return createElements(topic, Depth, dropdown_language)
+              State('dropdown_language', 'value'),
+              State('dropdown_layout', 'value')])
+def update_graph(n_clicks, topic, Depth, dropdown_language, dropdown_layout):
+    return createElements(topic, Depth, dropdown_language), {'name': dropdown_layout}
 
+'''
 # Layout
 @app.callback(Output('cytoscape', 'layout'),
               [State('dropdown_layout', 'value')])
 def update_cytoscape_layout(dropdown_layout):
     return {'name': dropdown_layout}
-
+'''
 
 
 if __name__ == '__main__':
