@@ -227,7 +227,6 @@ app.layout = html.Div([
 ])
 
 
-
 # Graph
 '''
 @app.callback(Output('elli', 'children'),
