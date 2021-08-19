@@ -310,7 +310,7 @@ def initialize_search (n_klicks, top, dep, max_count, lng):
 
 # starts the update_elements def if depth is not reached yet
 @app.callback(Output('ello', 'children'),
-              Input('interval-component', 'n_intervals'))
+              [Input('interval-component', 'n_intervals')])
 def for_depth(v):    
     global curr_depth, depth
     global is_running
@@ -324,8 +324,8 @@ def for_depth(v):
 @app.callback(Output('cytoscape', 'elements'),
               Output('depth', 'value'),
               Output('status', 'children'),
-              Input('ello', 'children'),
-              Input('add-depth', 'n_clicks'))
+              [Input('ello', 'children'),
+              Input('add-depth', 'n_clicks')])
 def update_elements(v, n_klicks):
     global topic, lang, depth
     global curr_depth, is_running, depth
@@ -377,7 +377,7 @@ def update_placeholder(search_value):
 
 # Weiterleitung
 @app.callback(Output('start-button', 'n_clicks'),
-              Input('cytoscape', 'tapNodeData'))
+              [Input('cytoscape', 'tapNodeData')])
 def displayTapNodeData(data):
     global topic
     topic = data['label']
@@ -385,7 +385,7 @@ def displayTapNodeData(data):
 
 
 @app.callback(Output('allo', 'children'),
-              Input('cytoscape', 'mouseoverNodeData'))
+              [Input('cytoscape', 'mouseoverNodeData')])
 def displayHoverNodeData(data):
     if data: return data['label']
 
