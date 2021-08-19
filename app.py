@@ -321,9 +321,9 @@ def for_depth(v):
     else: raise PreventUpdate
     
 # updates the elements of cytoscape graph
-@app.callback(Output('cytoscape', 'elements'),
+@app.callback([Output('cytoscape', 'elements'),
               Output('depth', 'value'),
-              Output('status', 'children'),
+              Output('status', 'children')],
               [Input('ello', 'children'),
               Input('add-depth', 'n_clicks')])
 def update_elements(v, n_klicks):
