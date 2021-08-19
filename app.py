@@ -286,7 +286,7 @@ app.layout = html.Div([
               [State('search-dropdown', 'value'),
               State('depth', 'value'),
               State('max-count', 'value'),
-              State('language-dropdown', 'value')], prevent_initial_call=True)
+              State('language-dropdown', 'value')])
 def initialize_search (n_klicks, top, dep, max_count, lng):
     
     global topic, depth, max_link_count, lang, curr_depth
@@ -325,7 +325,7 @@ def for_depth(v):
               Output('depth', 'value'),
               Output('status', 'children'),
               Input('ello', 'children'),
-              Input('add-depth', 'n_clicks'), prevent_initial_call=True)
+              Input('add-depth', 'n_clicks'))
 def update_elements(v, n_klicks):
     global topic, lang, depth
     global curr_depth, is_running, depth
@@ -354,7 +354,7 @@ def update_elements(v, n_klicks):
 # Search suggestions
 @app.callback(
     dash.dependencies.Output("search-dropdown", "options"),
-    [dash.dependencies.Input("search-dropdown", "search_value")], prevent_initial_call=True)
+    [dash.dependencies.Input("search-dropdown", "search_value")])
 def update_options(search_value):
     dic_op = []    
     options = getOptions(search_value)
@@ -366,7 +366,7 @@ def update_options(search_value):
 
 @app.callback(
     dash.dependencies.Output("search-dropdown", "placeholder"),
-    [dash.dependencies.Input("search-dropdown", "search_value")], prevent_initial_call=True)
+    [dash.dependencies.Input("search-dropdown", "search_value")])
 def update_placeholder(search_value):
     global placeholder
     if search_value: placeholder = search_value
@@ -377,7 +377,7 @@ def update_placeholder(search_value):
 
 # Weiterleitung
 @app.callback(Output('start-button', 'n_clicks'),
-              Input('cytoscape', 'tapNodeData'), prevent_initial_call=True)
+              Input('cytoscape', 'tapNodeData'))
 def displayTapNodeData(data):
     global topic
     topic = data['label']
