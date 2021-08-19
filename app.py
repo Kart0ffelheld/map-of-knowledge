@@ -354,7 +354,7 @@ def update_elements(v, n_klicks):
 # Search suggestions
 @app.callback(
     dash.dependencies.Output("search-dropdown", "options"),
-    [dash.dependencies.Input("search-dropdown", "search_value")])
+    [dash.dependencies.Input("search-dropdown", "value")])
 def update_options(search_value):
     dic_op = []    
     options = getOptions(search_value)
@@ -366,7 +366,7 @@ def update_options(search_value):
 
 @app.callback(
     dash.dependencies.Output("search-dropdown", "placeholder"),
-    [dash.dependencies.Input("search-dropdown", "search_value")])
+    [dash.dependencies.Input("search-dropdown", "value")])
 def update_placeholder(search_value):
     global placeholder
     if search_value: placeholder = search_value
