@@ -6,8 +6,6 @@ import dash_bootstrap_components as dbc
 import dash_cytoscape as cyto
 from dash.exceptions import PreventUpdate
 
-import networkx as nx
-
 from WikipediaArticle import WikipediaArticle
 from WikipediaArticle import suggest_article as getOptions
 
