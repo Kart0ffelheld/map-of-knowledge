@@ -157,7 +157,8 @@ controls = dbc.Card(
         dbc.FormGroup(
             [              
                 dbc.Label("Search term"),
-                dcc.Dropdown(id="search-dropdown", placeholder=placeholder)
+                #dcc.Dropdown(id="search-dropdown", placeholder=placeholder)
+		dcc.Input(id='search-input')
             ]
         ),
 		# depth
@@ -283,7 +284,7 @@ app.layout = html.Div([
 # Start the search with a click on START, update search parameters
 @app.callback(Output('elli', 'children'),
               [Input('start-button', 'n_clicks')],
-              [State('search-dropdown', 'value'),
+              [State('search-input', 'value'),
               State('depth', 'value'),
               State('max-count', 'value'),
               State('language-dropdown', 'value')])
@@ -352,25 +353,25 @@ def update_elements(v, n_klicks):
 
 #%%
 # Search suggestions
-@app.callback(
-    dash.dependencies.Output("search-dropdown", "options"),
-    [dash.dependencies.Input("search-dropdown", "value")])
-def update_options(search_value):
-    dic_op = []    
-    options = getOptions(search_value)
-    
-    for option in options:
-        eintrag = {'label':option, 'value':option}
-        dic_op.append(eintrag)
-    return dic_op
-
-@app.callback(
-    dash.dependencies.Output("search-dropdown", "placeholder"),
-    [dash.dependencies.Input("search-dropdown", "value")])
-def update_placeholder(search_value):
-    global placeholder
-    if search_value: placeholder = search_value
-    return placeholder
+#@app.callback(
+#    dash.dependencies.Output("search-dropdown", "options"),
+#    [dash.dependencies.Input("search-dropdown", "value")])
+#def update_options(search_value):
+#    dic_op = []    
+#    options = getOptions(search_value)
+#    
+#    for option in options:
+#        eintrag = {'label':option, 'value':option}
+#        dic_op.append(eintrag)
+#    return dic_op
+#
+#@app.callback(
+#    dash.dependencies.Output("search-dropdown", "placeholder"),
+#    [dash.dependencies.Input("search-dropdown", "value")])
+#def update_placeholder(search_value):
+#    global placeholder
+#    if search_value: placeholder = search_value
+#    return placeholder
 
 
 #%%
