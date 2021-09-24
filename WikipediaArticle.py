@@ -23,7 +23,10 @@ import requests
 import urllib.parse
 
 def suggest_article(text):
-	return wiki.search(text)
+	try:
+		return wiki.search(text)
+	except:
+		return [] #When error is encountered, return nothing
 
 
 class WikipediaArticle():
