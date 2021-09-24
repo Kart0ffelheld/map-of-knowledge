@@ -9,6 +9,8 @@ from dash.exceptions import PreventUpdate
 
 import networkx as nx
 
+from markup import controls, graph, hover_text, stylesheet, placeholder, app, server
+
 from WikipediaArticle import WikipediaArticle
 from WikipediaArticle import suggest_article as getOptions
 
@@ -88,7 +90,6 @@ def createElements (title, mother):
 
     next_id += len(links)
 
-
 def generateNextStage (term, lang):
     global elements, all_searchTerms
     global next_id, number_of_nodes
@@ -111,6 +112,8 @@ def generateNextStage (term, lang):
         stage_T = []
         stage_E = []
 
+<<<<<<< HEAD
+=======
 
 #%%
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
@@ -291,6 +294,7 @@ app.layout = html.Div([
     html.P(id="alli")
 ])
 
+>>>>>>> e93102eb4ffe430ac1deeb9051ad537262179054
 # Start the search with a click on START, update search parameters
 @app.callback(Output('elli', 'children'),
               [Input('start-button', 'n_clicks')],
@@ -298,6 +302,7 @@ app.layout = html.Div([
               State('depth', 'value'),
               State('max-count', 'value'),
               State('language-dropdown', 'value')], prevent_initial_call=True)
+
 def initialize_search (n_klicks, top, dep, number_branches, lng):
 
     global topic, depth, max_link_count, lang, curr_depth
@@ -322,6 +327,7 @@ def initialize_search (n_klicks, top, dep, number_branches, lng):
 # starts the update_elements def if depth is not reached yet
 @app.callback(Output('ello', 'children'),
               Input('interval-component', 'n_intervals'))
+
 def for_depth(v):
     global curr_depth, depth
     global is_running
@@ -338,6 +344,7 @@ def for_depth(v):
               Output('status', 'children'),
               Input('ello', 'children'),
               Input('add-depth', 'n_clicks'), prevent_initial_call=True)
+
 def update_elements(v, n_klicks):
     global topic, lang, depth
     global curr_depth, is_running, depth
@@ -367,6 +374,7 @@ def update_elements(v, n_klicks):
 @app.callback(
     dash.dependencies.Output("search-dropdown", "options"),
     [dash.dependencies.Input("search-dropdown", "search_value")], prevent_initial_call=True)
+
 def update_options(search_value):
     dic_op = []
     options = getOptions(search_value)
@@ -379,6 +387,7 @@ def update_options(search_value):
 @app.callback(
     dash.dependencies.Output("search-dropdown", "placeholder"),
     [dash.dependencies.Input("search-dropdown", "search_value")], prevent_initial_call=True)
+
 def update_placeholder(search_value):
     global placeholder
     if search_value: placeholder = search_value
@@ -390,6 +399,7 @@ def update_placeholder(search_value):
 # Weiterleitung
 @app.callback(Output('start-button', 'n_clicks'),
               Input('cytoscape', 'tapNodeData'), prevent_initial_call=True)
+
 def displayTapNodeData(data):
     global topic
     topic = data['label']
@@ -398,6 +408,7 @@ def displayTapNodeData(data):
 
 @app.callback(Output('allo', 'children'),
               Input('cytoscape', 'mouseoverNodeData'))
+
 def displayHoverNodeData(data):
     if data: return "Hallo, du schaust dir " + data['label'] + " an."
 
@@ -406,6 +417,7 @@ def displayHoverNodeData(data):
 # Layout
 @app.callback(Output('cytoscape', 'layout'),
               [Input('layout-dropdown', 'value')])
+
 def update_cytoscape_layout(layout):
     return {'name': layout}
 
