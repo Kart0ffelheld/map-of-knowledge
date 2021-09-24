@@ -6,13 +6,12 @@ import dash_bootstrap_components as dbc
 import dash_cytoscape as cyto
 from dash.exceptions import PreventUpdate
 
-import networkx as nx
-
 from WikipediaArticle import WikipediaArticle
 from WikipediaArticle import suggest_article as getOptions
 
 # pip install dash_bootstrap_components
 
+# TODO: Join scripts
 # TODO: Create mouse over label with first sentences / description
 # TODO: Skip print outs on heroku for better performance
 
@@ -158,7 +157,8 @@ controls = dbc.Card(
         dbc.FormGroup(
             [              
                 dbc.Label("Search term"),
-                dcc.Dropdown(id="search-dropdown", placeholder=placeholder)
+                #dcc.Dropdown(id="search-dropdown", placeholder=placeholder)
+		dcc.Input(id='search-input')
             ]
         ),
 		# depth
@@ -284,10 +284,10 @@ app.layout = html.Div([
 # Start the search with a click on START, update search parameters
 @app.callback(Output('elli', 'children'),
               [Input('start-button', 'n_clicks')],
-              [State('search-dropdown', 'value'),
+              [State('search-input', 'value'),
               State('depth', 'value'),
               State('max-count', 'value'),
-              State('language-dropdown', 'value')], prevent_initial_call=True)
+              State('language-dropdown', 'value')])
 def initialize_search (n_klicks, top, dep, max_count, lng):
     
     global topic, depth, max_link_count, lang, curr_depth
@@ -311,7 +311,7 @@ def initialize_search (n_klicks, top, dep, max_count, lng):
 
 # starts the update_elements def if depth is not reached yet
 @app.callback(Output('ello', 'children'),
-              Input('interval-component', 'n_intervals'))
+              [Input('interval-component', 'n_intervals')])
 def for_depth(v):    
     global curr_depth, depth
     global is_running
@@ -322,11 +322,11 @@ def for_depth(v):
     else: raise PreventUpdate
     
 # updates the elements of cytoscape graph
-@app.callback(Output('cytoscape', 'elements'),
+@app.callback([Output('cytoscape', 'elements'),
               Output('depth', 'value'),
-              Output('status', 'children'),
-              Input('ello', 'children'),
-              Input('add-depth', 'n_clicks'), prevent_initial_call=True)
+              Output('status', 'children')],
+              [Input('ello', 'children'),
+              Input('add-depth', 'n_clicks')])
 def update_elements(v, n_klicks):
     global topic, lang, depth
     global curr_depth, is_running, depth
@@ -353,32 +353,32 @@ def update_elements(v, n_klicks):
 
 #%%
 # Search suggestions
-@app.callback(
-    dash.dependencies.Output("search-dropdown", "options"),
-    [dash.dependencies.Input("search-dropdown", "search_value")], prevent_initial_call=True)
-def update_options(search_value):
-    dic_op = []    
-    options = getOptions(search_value)
-    
-    for option in options:
-        eintrag = {'label':option, 'value':option}
-        dic_op.append(eintrag)
-    return dic_op
-
-@app.callback(
-    dash.dependencies.Output("search-dropdown", "placeholder"),
-    [dash.dependencies.Input("search-dropdown", "search_value")], prevent_initial_call=True)
-def update_placeholder(search_value):
-    global placeholder
-    if search_value: placeholder = search_value
-    return placeholder
+#@app.callback(
+#    dash.dependencies.Output("search-dropdown", "options"),
+#    [dash.dependencies.Input("search-dropdown", "value")])
+#def update_options(search_value):
+#    dic_op = []    
+#    options = getOptions(search_value)
+#    
+#    for option in options:
+#        eintrag = {'label':option, 'value':option}
+#        dic_op.append(eintrag)
+#    return dic_op
+#
+#@app.callback(
+#    dash.dependencies.Output("search-dropdown", "placeholder"),
+#    [dash.dependencies.Input("search-dropdown", "value")])
+#def update_placeholder(search_value):
+#    global placeholder
+#    if search_value: placeholder = search_value
+#    return placeholder
 
 
 #%%
 
 # Weiterleitung
 @app.callback(Output('start-button', 'n_clicks'),
-              Input('cytoscape', 'tapNodeData'), prevent_initial_call=True)
+              [Input('cytoscape', 'tapNodeData')])
 def displayTapNodeData(data):
     global topic
     topic = data['label']
@@ -386,7 +386,7 @@ def displayTapNodeData(data):
 
 
 @app.callback(Output('allo', 'children'),
-              Input('cytoscape', 'mouseoverNodeData'))
+              [Input('cytoscape', 'mouseoverNodeData')])
 def displayHoverNodeData(data):
     if data: return data['label']
 
