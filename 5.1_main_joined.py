@@ -167,7 +167,7 @@ controls = dbc.Card(
             [
                 dbc.Label("Depth "),
                 dbc.Button("+", id="add-depth", outline=True, color="primary", size="sm", className="mr-2", n_clicks=0),
-                dbc.Input(id='depth', type='number', placeholder='Set a depth')#, """value='2'"""
+                dbc.Input(id='depth', type='number', placeholder='Set a depth', value='2')
 
             ]
         ),
@@ -176,7 +176,7 @@ controls = dbc.Card(
         dbc.FormGroup(
             [
                 dbc.Label("Number of Branches"),
-                dbc.Input(id='max-count', type='number', placeholder='Set an initial value')# """value='3'""",
+                dbc.Input(id='max-count', type='number', placeholder='Set an initial value', value='3')
 
             ]
         ),
