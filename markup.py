@@ -43,7 +43,7 @@ controls = dbc.Card(
 		# search term
         dbc.FormGroup(
             [
-                dbc.Label("Search term"),
+                dbc.Label("Search Term"),
                 dcc.Dropdown(id="search-dropdown", placeholder=placeholder)
             ]
         ),
@@ -112,7 +112,7 @@ controls = dbc.Card(
         dbc.FormGroup(
             [
                 dbc.Button("Start", id="start-button", outline=True, color="primary", size="lg", className="mr-2", n_clicks=0),
-	    	dbc.Button("+", id="add-depth", outline=True, color="primary", size="sm", className="mr-2", n_clicks=0)
+	    	dbc.Button("Increase Depth", id="add-depth", outline=True, color="primary", size="sm", className="mr-2", n_clicks=0)
             ]
         ),
     ],
