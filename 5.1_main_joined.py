@@ -47,17 +47,17 @@ stage_E = []
 
 #%%
 
-def getLinks (search_term, language, branch_number):
+def getLinks (search_term, language, number_branches):
     '''
     To return ALL links, set count to -1.
     '''
-    branch_number = int(branch_number)
+    number_branches = int(number_branches)
 
     article = WikipediaArticle(search_term=search_term, language=language)
     article.get_links_in_summary()
     links = article.links_from_summary
 
-    if len(links) > branch_number and not branch_number == -1: return links[:branch_number]
+    if len(links) > number_branches and not number_branches == -1: return links[:number_branches]
     else:                                              return links
 
 def createElements (title, mother):
@@ -298,7 +298,7 @@ app.layout = html.Div([
               State('depth', 'value'),
               State('max-count', 'value'),
               State('language-dropdown', 'value')], prevent_initial_call=True)
-def initialize_search (n_klicks, top, dep, branch_number, lng):
+def initialize_search (n_klicks, top, dep, number_branches, lng):
 
     global topic, depth, max_link_count, lang, curr_depth
     global elements, all_searchTerms
@@ -313,7 +313,7 @@ def initialize_search (n_klicks, top, dep, branch_number, lng):
         else:   topic = placeholder
 
     depth = int(dep)
-    max_link_count = branch_number
+    max_link_count = number_branches
     lang  = lng
 
     return ""
