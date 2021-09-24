@@ -47,17 +47,17 @@ stage_E = []
 
 #%%
 
-def getLinks (search_term, language, max_count):
+def getLinks (search_term, language, branch_number):
     '''
     To return ALL links, set count to -1.
     '''
-    max_count = int(max_count)
+    branch_number = int(branch_number)
 
     article = WikipediaArticle(search_term=search_term, language=language)
     article.get_links_in_summary()
     links = article.links_from_summary
 
-    if len(links) > max_count and not max_count == -1: return links[:max_count]
+    if len(links) > branch_number and not branch_number == -1: return links[:branch_number]
     else:                                              return links
 
 def createElements (title, mother):
@@ -175,8 +175,8 @@ controls = dbc.Card(
         # max count
         dbc.FormGroup(
             [
-                dbc.Label("Max Count"),
-                dbc.Input(id='max-count', type='number', placeholder='Set a max count')# """value='3'""",
+                dbc.Label("Number of Branches"),
+                dbc.Input(id='max-count', type='number', placeholder='Set an initial value')# """value='3'""",
 
             ]
         ),
@@ -298,7 +298,7 @@ app.layout = html.Div([
               State('depth', 'value'),
               State('max-count', 'value'),
               State('language-dropdown', 'value')], prevent_initial_call=True)
-def initialize_search (n_klicks, top, dep, max_count, lng):
+def initialize_search (n_klicks, top, dep, branch_number, lng):
 
     global topic, depth, max_link_count, lang, curr_depth
     global elements, all_searchTerms
@@ -313,7 +313,7 @@ def initialize_search (n_klicks, top, dep, max_count, lng):
         else:   topic = placeholder
 
     depth = int(dep)
-    max_link_count = max_count
+    max_link_count = branch_number
     lang  = lng
 
     return ""
