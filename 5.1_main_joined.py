@@ -166,7 +166,6 @@ controls = dbc.Card(
         dbc.FormGroup(
             [
                 dbc.Label("Depth "),
-                dbc.Button("+", id="add-depth", outline=True, color="primary", size="sm", className="mr-2", n_clicks=0),
                 dbc.Input(id='depth', type='number', placeholder='Set a depth', value='2')
 
             ]
@@ -227,7 +226,8 @@ controls = dbc.Card(
 		# start button
         dbc.FormGroup(
             [
-                dbc.Button("Start", id="start-button", outline=True, color="primary", size="lg", className="mr-2", n_clicks=0)
+                dbc.Button("Start", id="start-button", outline=True, color="primary", size="lg", className="mr-2", n_clicks=0),
+	    	dbc.Button("+", id="add-depth", outline=True, color="primary", size="sm", className="mr-2", n_clicks=0)
             ]
         ),
     ],
