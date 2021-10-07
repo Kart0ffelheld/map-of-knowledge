@@ -134,7 +134,7 @@ graph = dbc.Card(
 )
 
 info_button= hmtl.Div(
-	dbc.button("Info", id="info" outline=True, color="info", size="lg", className="mr-1")
+	dbc.button("Info", id="info_button" outline=True, color="info", size="lg", className="mr-1")
 	)
 
 
@@ -154,7 +154,7 @@ app.layout = html.Div([
     dbc.Container([
         html.H1("Map of Knowledge),
         html.H5("Have fun with the progam!"),
-	hmtl.Div(info),
+	hmtl.Div(info_button),
         html.Hr(),
         dbc.Row([
                 dbc.Col(controls, md=4),
