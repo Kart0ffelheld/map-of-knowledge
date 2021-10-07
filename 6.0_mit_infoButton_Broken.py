@@ -8,7 +8,7 @@ import dash_cytoscape as cyto
 from dash.exceptions import PreventUpdate
 
 
-from markup import controls, graph, hover_text, stylesheet, placeholder, app, server
+from markup import controls, graph, hover_text, stylesheet, placeholder, app, info_button, server
 
 from WikipediaArticle import WikipediaArticle
 from WikipediaArticle import suggest_article as getOptions
@@ -43,55 +43,47 @@ elements = []
 next_id = 0
 number_of_nodes = 0
 
-terms_curr_stage = []
-elements_curr_stage = []
+stage_T = []
+stage_E = []
 
+#%%
 
-def getArticle (search_term, language, number_branches):
+def getLinks (search_term, language, number_branches):
     '''
-    To return ALL links, set number_branches to -1.
+    To return ALL links, set count to -1.
     '''
     number_branches = int(number_branches)
 
-    article = WikipediaArticle(page_name = search_term, language = language)
+    article = WikipediaArticle(search_term=search_term, language=language)
     article.get_links_in_summary()
+    links = article.links_from_summary
 
-    if number_branches != -1: 
-        article.filter(number_branches)
-    
-    elif number_branches == -1: # -1 Represents: get all links
-        article.filtered_links_from_summary = article.links_from_summary
-
-    return article
+    if len(links) > number_branches and not number_branches == -1: return links[:number_branches]
+    else:                                              return links
 
 def createElements (title, mother):
     global all_searchTerms, elements, lang, next_id
-    global elements_curr_stage, terms_curr_stage
+    global stage_E, stage_T
 
-    article = getArticle(title, lang, max_link_count)
-    links = article.filtered_links_from_summary
+    links = getLinks(title, lang, max_link_count)
 
     for i in range(len(links)):
         link = links[i]
 
         if link not in all_searchTerms:
-            terms_curr_stage.append(link)
+            stage_T.append(link)
 
             # nodes
             label = link
-
-            linked_article = getArticle(label, lang, max_link_count)
-            linked_article = linked_article.toJSON()
-
-            id = str(curr_depth) + "-" + str(next_id + i)
-            eintrag = {'data': {'id': id, 'label': label, 'wiki_object': linked_article}}
-            elements_curr_stage.append(eintrag)
+            id = str(curr_depth)+"-"+str(next_id+i)
+            eintrag = {'data': {'id': id, 'label': label}}
+            stage_E.append(eintrag)
 
             # edges
-            id0 = str(curr_depth - 1) + "-" + str(mother)
+            id0 = str(curr_depth-1)+"-"+str(mother)
             id1 = id
             eintrag = {'data': {'source': id0, 'target': id1}}
-            elements_curr_stage.append(eintrag)
+            stage_E.append(eintrag)
 
         else: raise Exception("Link schon vorhanden!")
 
@@ -100,13 +92,10 @@ def createElements (title, mother):
 def generateNextStage (term, lang):
     global elements, all_searchTerms
     global next_id, number_of_nodes
-    global elements_curr_stage, terms_curr_stage
+    global stage_E, stage_T
 
     if all_searchTerms == []:
-        article = getArticle(term, lang, max_link_count)
-        article = article.toJSON()
-
-        elements.append([{'data': {'id': "0-0", 'label': term, 'wiki_object': article}}])
+        elements.append([{'data': {'id': "0-0", 'label': term}}])
         all_searchTerms.append([term])
         number_of_nodes = 1
 
@@ -117,10 +106,10 @@ def generateNextStage (term, lang):
             term = terms[i]
             createElements(term, i)
 
-        all_searchTerms.append(terms_curr_stage)
-        elements.append(elements_curr_stage)
-        terms_curr_stage = []
-        elements_curr_stage = []
+        all_searchTerms.append(stage_T)
+        elements.append(stage_E)
+        stage_T = []
+        stage_E = []
 
 # Start the search with a click on START, update search parameters
 @app.callback(Output('elli', 'children'),
@@ -189,9 +178,11 @@ def update_elements(v, n_klicks):
     for el in elements:
         for e in el:
             list_of_elements.append(e)
+            # print(e)
+        # print()
 
     is_running = False
-    return list_of_elements, depth, str(curr_depth) + "/" + str(depth)
+    return list_of_elements, depth, str(curr_depth)+"/"+str(depth)
 
 
 #%%
@@ -235,8 +226,7 @@ def displayTapNodeData(data):
               Input('cytoscape', 'mouseoverNodeData'))
 
 def displayHoverNodeData(data):
-    if data: 
-        return data['wiki_object']['summary_html']
+    if data: return "Hallo, du schaust dir " + data['label'] + " an."
 
 
 #%%
