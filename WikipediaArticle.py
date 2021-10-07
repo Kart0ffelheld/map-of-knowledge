@@ -33,9 +33,9 @@ class WikipediaArticle():
 	"""
 	-- An Wikipedia Article --
 	
-	Use it like this:
+	USE LIKE DESCRIBED HERE:
 	
-	article = WikipediaArticle(ARTICLE_NAME_HERE)
+	article = WikipediaArticle(article_name)
 
 	article.get_wikipedia_object() 
 	#This way access links, links_filtered e.g.
@@ -142,6 +142,8 @@ class WikipediaArticle():
 					# This will replace %27 with ' and %E2%80%93 with - and so on
 
 					if self._is_real_link(link_string) and link_string not in links_filtered:
+						link_string = link_string.replace("_", " ") # _ represent Spaces in the URLs
+
 						links_filtered.append(link_string)
 
 			print("[+] success, links found: " + str(len(links_filtered)))
@@ -156,6 +158,10 @@ class WikipediaArticle():
 
 		if link_string[0:5] == "File:":
 			return False
+
+		if link_string[0:2] == "//":
+			return False
+		
 		
 		return True			
 

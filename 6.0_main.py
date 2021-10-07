@@ -58,8 +58,11 @@ def getLinks (search_term, language, number_branches):
     article.get_links_in_summary()
     links = article.links_from_summary
 
-    if len(links) > number_branches and not number_branches == -1: return links[:number_branches]
-    else:                                              return links
+    if len(links) > number_branches and not number_branches == -1: 
+        return links[:number_branches]
+        
+    else:                                              
+        return links
 
 def createElements (title, mother):
     global all_searchTerms, elements, lang, next_id
@@ -226,6 +229,10 @@ def displayTapNodeData(data):
               Input('cytoscape', 'mouseoverNodeData'))
 
 def displayHoverNodeData(data):
+    print(stage_T)
+    print("")
+    print(stage_E)
+
     if data: return "Hallo, du schaust dir " + data['label'] + " an."
 
 

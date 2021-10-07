@@ -135,7 +135,7 @@ graph = dbc.Card(
 
 hover_text = dbc.Card(
     dbc.FormGroup([
-        html.P(id="allo")
+        html.P(id="hover_text")
     ])
 )
 
