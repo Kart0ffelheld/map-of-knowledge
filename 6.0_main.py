@@ -43,50 +43,55 @@ elements = []
 next_id = 0
 number_of_nodes = 0
 
-stage_T = []
-stage_E = []
+terms_curr_stage = []
+elements_curr_stage = []
 
-#%%
 
-def getLinks (search_term, language, number_branches):
+def getArticle (search_term, language, number_branches):
     '''
-    To return ALL links, set count to -1.
+    To return ALL links, set number_branches to -1.
     '''
     number_branches = int(number_branches)
 
-    article = WikipediaArticle(search_term=search_term, language=language)
+    article = WikipediaArticle(page_name = search_term, language = language)
     article.get_links_in_summary()
-    links = article.links_from_summary
 
-    if len(links) > number_branches and not number_branches == -1: 
-        return links[:number_branches]
-        
-    else:                                              
-        return links
+    if number_branches != -1: 
+        article.filter(number_branches)
+    
+    elif number_branches == -1: # -1 Represents: get all links
+        article.filtered_links_from_summary = article.links_from_summary
+
+    return article
 
 def createElements (title, mother):
     global all_searchTerms, elements, lang, next_id
-    global stage_E, stage_T
+    global elements_curr_stage, terms_curr_stage
 
-    links = getLinks(title, lang, max_link_count)
+    article = getArticle(title, lang, max_link_count)
+    links = article.filtered_links_from_summary
 
     for i in range(len(links)):
         link = links[i]
 
         if link not in all_searchTerms:
-            stage_T.append(link)
+            terms_curr_stage.append(link)
 
             # nodes
             label = link
-            id = str(curr_depth)+"-"+str(next_id+i)
-            eintrag = {'data': {'id': id, 'label': label}}
-            stage_E.append(eintrag)
+
+            linked_article = getArticle(label, lang, max_link_count)
+            linked_article = linked_article.toJSON()
+
+            id = str(curr_depth) + "-" + str(next_id + i)
+            eintrag = {'data': {'id': id, 'label': label, 'wiki_object': linked_article}}
+            elements_curr_stage.append(eintrag)
 
             # edges
-            id0 = str(curr_depth-1)+"-"+str(mother)
+            id0 = str(curr_depth - 1) + "-" + str(mother)
             id1 = id
             eintrag = {'data': {'source': id0, 'target': id1}}
-            stage_E.append(eintrag)
+            elements_curr_stage.append(eintrag)
 
         else: raise Exception("Link schon vorhanden!")
 
@@ -95,10 +100,13 @@ def createElements (title, mother):
 def generateNextStage (term, lang):
     global elements, all_searchTerms
     global next_id, number_of_nodes
-    global stage_E, stage_T
+    global elements_curr_stage, terms_curr_stage
 
     if all_searchTerms == []:
-        elements.append([{'data': {'id': "0-0", 'label': term}}])
+        article = getArticle(term, lang, max_link_count)
+        article = article.toJSON()
+
+        elements.append([{'data': {'id': "0-0", 'label': term, 'wiki_object': article}}])
         all_searchTerms.append([term])
         number_of_nodes = 1
 
@@ -109,10 +117,10 @@ def generateNextStage (term, lang):
             term = terms[i]
             createElements(term, i)
 
-        all_searchTerms.append(stage_T)
-        elements.append(stage_E)
-        stage_T = []
-        stage_E = []
+        all_searchTerms.append(terms_curr_stage)
+        elements.append(elements_curr_stage)
+        terms_curr_stage = []
+        elements_curr_stage = []
 
 # Start the search with a click on START, update search parameters
 @app.callback(Output('elli', 'children'),
@@ -181,11 +189,9 @@ def update_elements(v, n_klicks):
     for el in elements:
         for e in el:
             list_of_elements.append(e)
-            # print(e)
-        # print()
 
     is_running = False
-    return list_of_elements, depth, str(curr_depth)+"/"+str(depth)
+    return list_of_elements, depth, str(curr_depth) + "/" + str(depth)
 
 
 #%%
@@ -229,11 +235,8 @@ def displayTapNodeData(data):
               Input('cytoscape', 'mouseoverNodeData'))
 
 def displayHoverNodeData(data):
-    print(stage_T)
-    print("")
-    print(stage_E)
-
-    if data: return "Hallo, du schaust dir " + data['label'] + " an."
+    if data: 
+        return data['wiki_object']['summary_html']
 
 
 #%%
