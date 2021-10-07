@@ -152,7 +152,7 @@ app.title='MoK'
 
 app.layout = html.Div([
     dbc.Container([
-        html.H1("Map of Knowledge"),
+        html.H1("Map of Knowledge, lalalal"),
         html.H5("Have fun with the progam!"),
 	hmtl.Div(dbc.button("Info", id="info" outline=True, color="info", size="lg", className="mr-1")),
         html.Hr(),
