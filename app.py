@@ -236,7 +236,6 @@ def displayTapNodeData(data):
     		  [Input("info-button", "n_clicks")],
     		  [State("info-text", "is_open")])
 def toggle_collapse(n_clicks, is_open):
-	##print(n_clicks)
     if n_clicks:
         return not is_open
     return is_open
