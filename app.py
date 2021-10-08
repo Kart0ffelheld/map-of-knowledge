@@ -8,7 +8,7 @@ import dash_cytoscape as cyto
 from dash.exceptions import PreventUpdate
 
 
-from markup import controls, graph, hover_text, stylesheet, placeholder, app, server
+from markup import controls, graph, info_button, hover_text, stylesheet, placeholder, app, server
 
 from WikipediaArticle import WikipediaArticle
 from WikipediaArticle import suggest_article as getOptions
