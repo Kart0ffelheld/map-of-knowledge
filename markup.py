@@ -133,6 +133,25 @@ graph = dbc.Card(
     ])
 )
 
+info_button = html.Div(
+    [
+        dbc.Button(
+            "Info",
+            id="info-button",
+			outline=True,
+			size="lg",
+            className="mb-3",
+            color="info",
+            n_clicks=0,
+        ),
+        dbc.Collapse(
+            dbc.Card(dbc.CardBody("Hovering over a node displays the summary down below. Clicking on a node starts a new search with the chosen node as your search term. Clicking on the plus button adds a layer of depth to your search.")),
+            id="info-text",
+            is_open=False,
+        ),
+    ]
+)
+
 hover_text = dbc.Card(
     dbc.FormGroup([
         html.P(id="hover_text")
@@ -147,8 +166,13 @@ app.title='MoK'
 
 app.layout = html.Div([
     dbc.Container([
-        html.H1("Map of Knowledge"),
-        html.H5("Have fun with the progam!"),
+       dbc.Row([
+            dbc.Col(html.H1("Map of Knowledge")),
+            dbc.Col(html.Div(info_button), align="end", width=4),
+        ]),
+        dbc.Row([
+            dbc.Col(html.H5("Have fun with the progam!")),
+	]),
         html.Hr(),
         dbc.Row([
                 dbc.Col(controls, md=4),
