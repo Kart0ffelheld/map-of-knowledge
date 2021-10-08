@@ -8,7 +8,7 @@ import dash_cytoscape as cyto
 from dash.exceptions import PreventUpdate
 
 
-from markup import controls, graph, hover_text, stylesheet, placeholder, app, server
+from markup import controls, graph, info_button, hover_text, stylesheet, placeholder, app, server
 
 from WikipediaArticle import WikipediaArticle
 from WikipediaArticle import suggest_article as getOptions
@@ -231,6 +231,16 @@ def displayTapNodeData(data):
     return -1
 
 
+# info_button
+@app.callback(Output("info-text", "is_open"),
+              [Input("info-button", "n_clicks")],
+              [State("info-text", "is_open")])
+def toggle_collapse(n_clicks, is_open):
+    if n_clicks:
+        return not is_open
+    return is_open
+
+
 @app.callback(Output('hover_text', 'children'),
               Input('cytoscape', 'mouseoverNodeData'))
 
@@ -238,7 +248,7 @@ def displayHoverNodeData(data):
     if data: 
         return data['wiki_object']['summary_html']
 
-
+    
 #%%
 # Layout
 @app.callback(Output('cytoscape', 'layout'),
