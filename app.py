@@ -231,6 +231,17 @@ def displayTapNodeData(data):
     return -1
 
 
+# info_button
+@app.callback(Output("info-text", "is_open"),
+    		  [Input("info-button", "n_clicks")],
+    		  [State("info-text", "is_open")])
+def toggle_collapse(n_clicks, is_open):
+	##print(n_clicks)
+    if n_clicks:
+        return not is_open
+    return is_open
+
+#summaries
 @app.callback(Output('hover_text', 'children'),
               Input('cytoscape', 'mouseoverNodeData'))
 
