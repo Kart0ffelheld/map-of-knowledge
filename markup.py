@@ -145,7 +145,7 @@ info_button = html.Div(
             n_clicks=0,
         ),
         dbc.Collapse(
-            dbc.Card(dbc.CardBody("Hovering over a node displays the summary down below. Clicking on a node starts a new search with the chosen node as your search term. Clicking on the plus button adds a layer of depth to your search.")),
+            dbc.Card(dbc.CardBody("Enter a search term and click Start to start you search. \n Hovering over a node displays the summary down below. Clicking on a node starts a new search with the chosen node as your search term.")),
             id="info-text",
             is_open=False,
         ),
