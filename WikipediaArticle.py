@@ -4,16 +4,18 @@ pip install wikipedia
 OR
 pip install git+https://github.com/lucasdnd/Wikipedia.git
 
+This is backwards COMPATIBLE with versions 4.5.1_main.py to newest
+
 Helpful:
 https://stackabuse.com/getting-started-with-pythons-wikipedia-api/
 
 Issues:
-- Is "wikipedia-api" API faster?
 - Filter smartly
 	- By links in summary => parse HTML 
 	- Maybe with "Backlinks" or "links point to this site"
 - Let user choose starting node if there is disambiguation -JUP-
 - starting article not existent -JUP-
+- Is "wikipedia-api" API faster? -NOP-
 '''
 
 import wikipedia as wiki
@@ -142,6 +144,8 @@ class WikipediaArticle():
 
 			print("[+] success, links found: " + str(len(links_filtered)))
 			self.links_from_summary = links_filtered
+
+			self.summary_text = BeautifulSoup(self.summary_html).get_text()
 			
 	def _is_real_link(self, link_string):
 		if link_string[0:11] == "#cite_note-":
@@ -185,6 +189,7 @@ class WikipediaArticle():
 			#These will be set through 'get_links_in_summary()'
 			'is_starting_article': self.is_starting_article,
 			'summary_html': self.summary_html,
+			'summary_text': self.summary_text,
 			'links_from_summary': self.links_from_summary,
 			'filtered_links_from_summary': self.filtered_links_from_summary
 

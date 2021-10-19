@@ -1,4 +1,6 @@
 '''
+This is backwards COMPATIBLE with versions 1.0_main.py to 4.5
+
 Backup includes capability to save and load JSON
 
 Requires 
