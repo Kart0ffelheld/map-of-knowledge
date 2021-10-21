@@ -122,6 +122,9 @@ def generateNextStage (term, lang):
         terms_curr_stage = []
         elements_curr_stage = []
 
+    print("ELEMENTS")
+    print(elements)
+
 # Start the search with a click on START, update search parameters
 @app.callback(Output('elli', 'children'),
               [Input('start-button', 'n_clicks')],
@@ -189,6 +192,9 @@ def update_elements(v, n_klicks):
     for el in elements:
         for e in el:
             list_of_elements.append(e)
+
+    print("LIST OF ELEMENTS")
+    print(list_of_elements)
 
     is_running = False
     return list_of_elements, depth, str(curr_depth) + "/" + str(depth)
