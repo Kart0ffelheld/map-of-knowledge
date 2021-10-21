@@ -44,7 +44,7 @@ controls = dbc.Card(
         dbc.FormGroup(
             [
                 dbc.Label("Search Term"),
-                dcc.Dropdown(id="search-dropdown", placeholder=placeholder)
+                dcc.Dropdown(id="search-dropdown", placeholder=placeholder, value='')
             ]
         ),
 		# depth
@@ -145,7 +145,7 @@ info_button = html.Div(
             n_clicks=0,
         ),
         dbc.Collapse(
-            dbc.Card(dbc.CardBody("Hovering over a node displays the summary down below. Clicking on a node starts a new search with the chosen node as your search term. Clicking on the plus button adds a layer of depth to your search.")),
+            dbc.Card(dbc.CardBody("Enter a search Term and click 'Start'. Hovering over an article displays the summary down below. Clicking on an article starts a new search with the chosen article as your search term. The number of branches is the connections of each article")),
             id="info-text",
             is_open=False,
         ),

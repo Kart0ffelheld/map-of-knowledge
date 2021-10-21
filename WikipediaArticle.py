@@ -145,7 +145,7 @@ class WikipediaArticle():
 			print("[+] success, links found: " + str(len(links_filtered)))
 			self.links_from_summary = links_filtered
 
-			self.summary_text = BeautifulSoup(self.summary_html).get_text()
+			self.summary_text = BeautifulSoup(self.summary_html, 'html.parser').get_text()
 			
 	def _is_real_link(self, link_string):
 		if link_string[0:11] == "#cite_note-":
