@@ -3,6 +3,9 @@
 ## Official release:
 https://map-of-knowledge.herokuapp.com/
 
+<img width="695" alt="Bildschirmfoto 2022-03-19 um 01 25 11" src="https://user-images.githubusercontent.com/22854379/159112048-fb1effaa-62c3-4a0c-a4e5-5e2dfc1129ca.png">
+
+
 ## Zielsetzung
 
 Unser Ziel war eine Visualisierung der Verbindung zwischen Wissensbereichen. Dafür wollten wir eine Suchmaschine entwickeln, die anhand eines eingegebenen Suchbegriffs einen Graphen erstellt.
