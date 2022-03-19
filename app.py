@@ -53,7 +53,7 @@ def getArticle (search_term, language, number_branches):
     '''
     number_branches = int(number_branches)
 
-    article = WikipediaArticle(page_name = search_term, language = language)
+    article = WikipediaArticle(page_name = search_term) # language = language
     article.get_links_in_summary()
 
     if number_branches != -1: 
@@ -65,7 +65,7 @@ def getArticle (search_term, language, number_branches):
     return article
 
 def createElements (title, mother):
-    global all_searchTerms, elements, lang, next_id
+    global all_searchTerms, elements, lang , next_id
     global elements_curr_stage, terms_curr_stage
 
     article = getArticle(title, lang, max_link_count)

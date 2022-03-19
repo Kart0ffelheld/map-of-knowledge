@@ -93,13 +93,21 @@ class WikipediaArticle():
 		# Auto suggestion causes weird errors. Like "Dog" turning to "Do" in the search
 
 	def get_links_in_summary(self): # Via "requests" and HTML parsing
+		print("[*] page_name: ", self.page_name)
 		phrase_formatted = self.page_name.replace(" ", "_")
+		print("[*] phrase_formatted: ", phrase_formatted)
 		phrase_formatted = urllib.parse.quote(phrase_formatted)
+		print("[*] phrase_formatted: ", phrase_formatted)
 
 		self.url = "https://" + self.language + ".wikipedia.org/wiki/" + phrase_formatted
 		print("[*] TRYING (html): ", self.url)	
 		
-		raw_html = requests.get(self.url)
+		try:
+			raw_html = requests.get(self.url)
+		except Exception as e: 
+			print("[!] ERROR! request error", e)
+			return
+
 		html = BeautifulSoup(raw_html.text, 'html.parser') 
 		# This is the page in HTML in parseable format
 		parent = html.find('div', class_ = "mw-parser-output")
