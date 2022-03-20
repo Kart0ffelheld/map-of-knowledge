@@ -18,6 +18,8 @@ pip install -r requirements.txt
 flask run
 ```
 
+## How do i use it?
+In the top-right of the page click the Info Button
 
 ## Zielsetzung
 
