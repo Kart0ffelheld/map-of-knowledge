@@ -1,4 +1,5 @@
 # Map of Knowledge
+Wikipedia-article connection-visualiser with live crawling from the wikipedia page of your search query.
 
 ## Official release:
 https://map-of-knowledge.herokuapp.com/
