@@ -2,8 +2,21 @@
 
 ## Official release:
 https://map-of-knowledge.herokuapp.com/
+(Work in progress with heroku deploying, still crashes sometimes)
 
 <img width="695" alt="Bildschirmfoto 2022-03-19 um 01 25 11" src="https://user-images.githubusercontent.com/22854379/159112048-fb1effaa-62c3-4a0c-a4e5-5e2dfc1129ca.png">
+
+
+## Run it locally yourself!
+1. Clone this repository
+2. Inside of the projects directory install all requirements with
+```
+pip install -r requirements.txt
+```
+3. Run it
+```
+flask run
+```
 
 
 ## Zielsetzung
